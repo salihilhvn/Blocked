@@ -1,0 +1,10 @@
+{
+  "levelId": 1,
+  "gridSize": 6,
+  "blocks": [
+    { "id": 0, "isHorizontal": true, "length": 2, "x": 0, "y": 2, "isTarget": true },
+    { "id": 1, "isHorizontal": false, "length": 3, "x": 2, "y": 0, "isTarget": false },
+    { "id": 2, "isHorizontal": false, "length": 2, "x": 3, "y": 1, "isTarget": false },
+    { "id": 3, "isHorizontal": true, "length": 3, "x": 1, "y": 4, "isTarget": false }
+  ]
+}
