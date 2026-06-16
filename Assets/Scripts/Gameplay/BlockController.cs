@@ -1,24 +1,36 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class BlockController : MonoBehaviour
+public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public int Id { get; private set; }
     public int Length { get; private set; }
     public bool IsHorizontal { get; private set; }
     public bool IsTarget { get; private set; }
+    public bool IsFree { get; private set; }
     public Vector2Int GridPosition { get; private set; }
 
     private Vector3 offset;
     private Camera mainCamera;
     private bool isDragging = false;
+    
+    private enum DragAxis { None, Horizontal, Vertical }
+    private DragAxis currentDragAxis = DragAxis.None;
+    private Vector3 dragStartMousePos;
 
-    public void Initialize(int id, int length, bool isHorizontal, bool isTarget, Vector2Int startPos)
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+    }
+
+    public void Initialize(int id, int length, bool isHorizontal, bool isTarget, bool isFree, Vector2Int startPos)
     {
         Id = id;
         Length = length;
         IsHorizontal = isHorizontal;
         IsTarget = isTarget;
+        IsFree = isFree;
         GridPosition = startPos;
 
         mainCamera = Camera.main;
@@ -42,22 +54,47 @@ public class BlockController : MonoBehaviour
         GridManager.Instance.UnregisterBlock(GridPosition.x, GridPosition.y, Length, IsHorizontal);
     }
 
-    private void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
 
-        offset = transform.position - GetMouseWorldPos();
+        offset = transform.position - GetMouseWorldPos(eventData.position);
+        dragStartMousePos = GetMouseWorldPos(eventData.position);
+        currentDragAxis = DragAxis.None;
         isDragging = true;
         UnregisterFromGrid();
     }
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging || GameManager.Instance.CurrentState != GameManager.GameState.Playing) return;
 
-        Vector3 targetPos = GetMouseWorldPos() + offset;
+        Vector3 currentMousePos = GetMouseWorldPos(eventData.position);
+        Vector3 targetPos = currentMousePos + offset;
 
-        if (IsHorizontal)
+        bool moveHorizontal = IsHorizontal;
+
+        if (IsFree)
+        {
+            if (currentDragAxis == DragAxis.None)
+            {
+                Vector3 delta = currentMousePos - dragStartMousePos;
+                if (delta.magnitude > 0.1f) // Eşik değeri
+                {
+                    if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+                        currentDragAxis = DragAxis.Horizontal;
+                    else
+                        currentDragAxis = DragAxis.Vertical;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            moveHorizontal = (currentDragAxis == DragAxis.Horizontal);
+        }
+
+        if (moveHorizontal)
         {
             float targetX = targetPos.x;
             float minX = GetMinXWorld();
@@ -77,7 +114,7 @@ public class BlockController : MonoBehaviour
         }
     }
 
-    private void OnMouseUp()
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (!isDragging) return;
         isDragging = false;
@@ -94,9 +131,9 @@ public class BlockController : MonoBehaviour
         }
     }
 
-    private Vector3 GetMouseWorldPos()
+    private Vector3 GetMouseWorldPos(Vector2 screenPos)
     {
-        Vector3 mousePoint = Input.mousePosition;
+        Vector3 mousePoint = screenPos;
         mousePoint.z = Mathf.Abs(mainCamera.transform.position.z);
         return mainCamera.ScreenToWorldPoint(mousePoint);
     }

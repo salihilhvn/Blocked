@@ -4,8 +4,8 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    public const int Width = 6;
-    public const int Height = 6;
+    public const int Width = 5;
+    public const int Height = 5;
 
     // 2D matrisimiz blok referanslarını tutar.
     private BlockController[,] grid;
@@ -43,9 +43,15 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < length; i++)
         {
             if (isHorizontal)
-                grid[x + i, y] = block;
+            {
+                if (x + i >= 0 && x + i < Width && y >= 0 && y < Height)
+                    grid[x + i, y] = block;
+            }
             else
-                grid[x, y + i] = block;
+            {
+                if (x >= 0 && x < Width && y + i >= 0 && y + i < Height)
+                    grid[x, y + i] = block;
+            }
         }
     }
 
@@ -55,11 +61,13 @@ public class GridManager : MonoBehaviour
         {
             if (isHorizontal)
             {
-                if(x + i < Width) grid[x + i, y] = null;
+                if (x + i >= 0 && x + i < Width && y >= 0 && y < Height)
+                    grid[x + i, y] = null;
             }
             else
             {
-                if(y + i < Height) grid[x, y + i] = null;
+                if (x >= 0 && x < Width && y + i >= 0 && y + i < Height)
+                    grid[x, y + i] = null;
             }
         }
     }

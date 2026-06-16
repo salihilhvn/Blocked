@@ -1,0 +1,42 @@
+{
+    "levelId": 1,
+    "gridSize": 5,
+    "blocks": [
+        {
+            "id": 1,
+            "isHorizontal": true,
+            "length": 2,
+            "x": 0,
+            "y": 2,
+            "isTarget": true,
+            "isFree": false
+        },
+        {
+            "id": 2,
+            "isHorizontal": false,
+            "length": 2,
+            "x": 2,
+            "y": 0,
+            "isTarget": false,
+            "isFree": false
+        },
+        {
+            "id": 3,
+            "isHorizontal": true,
+            "length": 2,
+            "x": 3,
+            "y": 0,
+            "isTarget": false,
+            "isFree": false
+        },
+        {
+            "id": 4,
+            "isHorizontal": false,
+            "length": 1,
+            "x": 4,
+            "y": 4,
+            "isTarget": false,
+            "isFree": true
+        }
+    ]
+}

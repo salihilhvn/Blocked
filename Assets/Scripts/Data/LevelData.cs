@@ -18,4 +18,5 @@ public class BlockData
     public int x; // Grid X koordinatı (Sol alt)
     public int y; // Grid Y koordinatı (Sol alt)
     public bool isTarget;
+    public bool isFree; // 1x1 her yöne gidebilen blok
 }

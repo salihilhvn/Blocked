@@ -21,7 +21,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(GameState.MainMenu);
+        // Sadece başlangıç durumu atıyoruz, eğer level yüklenmemişse.
+        if (CurrentState != GameState.Playing)
+        {
+            ChangeState(GameState.MainMenu);
+        }
     }
 
     public void ChangeState(GameState newState)
