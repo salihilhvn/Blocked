@@ -1,0 +1,17 @@
+{
+  "levelId": 3,
+  "gridSize": 5,
+  "maxMoves": 25,
+  "blocks": [
+    { "id": 0, "isHorizontal": true, "length": 2, "x": 0, "y": 2, "isTarget": true, "isFree": false },
+    { "id": 1, "isHorizontal": false, "length": 2, "x": 2, "y": 0, "isTarget": false, "isFree": false },
+    { "id": 2, "isHorizontal": true, "length": 2, "x": 0, "y": 1, "isTarget": false, "isFree": false },
+    { "id": 3, "isHorizontal": false, "length": 2, "x": 0, "y": 3, "isTarget": false, "isFree": false },
+    { "id": 4, "isHorizontal": false, "length": 2, "x": 1, "y": 3, "isTarget": false, "isFree": false },
+    { "id": 5, "isHorizontal": true, "length": 3, "x": 2, "y": 4, "isTarget": false, "isFree": false },
+    { "id": 6, "isHorizontal": false, "length": 2, "x": 3, "y": 1, "isTarget": false, "isFree": false },
+    { "id": 7, "isHorizontal": false, "length": 2, "x": 4, "y": 2, "isTarget": false, "isFree": false },
+    { "id": 8, "isHorizontal": true, "length": 2, "x": 3, "y": 0, "isTarget": false, "isFree": false },
+    { "id": 9, "isHorizontal": false, "length": 1, "x": 0, "y": 0, "isTarget": false, "isFree": true }
+  ]
+}

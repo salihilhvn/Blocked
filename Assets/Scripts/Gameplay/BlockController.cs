@@ -121,9 +121,17 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
         // Snap to grid
         Vector2Int newGridPos = CalculateGridPositionFromWorld();
+        
+        bool hasMoved = (newGridPos != GridPosition);
+        
         GridPosition = newGridPos;
         UpdateWorldPosition();
         RegisterToGrid();
+
+        if (hasMoved)
+        {
+            GameManager.Instance.OnBlockMoved();
+        }
 
         if (IsTarget)
         {
@@ -151,14 +159,18 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private float GetMaxXWorld()
     {
         int emptyRight = 0;
-        for (int i = GridPosition.x + Length; i < GridManager.Width; i++) {
+        for (int i = GridPosition.x + Length; i < GridManager.Instance.Width; i++) {
             if (GridManager.Instance.IsCellEmptyOrSameBlock(i, GridPosition.y, this)) emptyRight++;
             else break;
         }
         
         // Hedef blok (Target) kapıdan dışarı çıkabilir (Sağdan)
         if (IsTarget && GridPosition.y == 2) { 
-            emptyRight += 2; // Çıkış boşluğunu telafi et
+            // SADECE kapıya (sağ kenara) kadar yol boşsa dışarı taşmasına izin ver
+            if (GridPosition.x + Length + emptyRight == GridManager.Instance.Width)
+            {
+                emptyRight += 2; // Çıkış boşluğunu telafi et
+            }
         }
 
         return GridManager.Instance.GridToWorld(GridPosition.x + emptyRight, GridPosition.y, Length, IsHorizontal).x;
@@ -177,7 +189,7 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private float GetMaxYWorld()
     {
         int emptyUp = 0;
-        for (int i = GridPosition.y + Length; i < GridManager.Height; i++) {
+        for (int i = GridPosition.y + Length; i < GridManager.Instance.Height; i++) {
             if (GridManager.Instance.IsCellEmptyOrSameBlock(GridPosition.x, i, this)) emptyUp++;
             else break;
         }
@@ -195,13 +207,13 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         int x = Mathf.RoundToInt((leftEdgeWorld - origin.x) / cellSize);
         int y = Mathf.RoundToInt((bottomEdgeWorld - origin.y) / cellSize);
 
-        if (IsTarget && x >= GridManager.Width - Length) {
+        if (IsTarget && x >= GridManager.Instance.Width - Length) {
             // Dışarı çıkmışsa grid içine zorlama
             return new Vector2Int(x, y);
         }
 
-        x = Mathf.Clamp(x, 0, GridManager.Width - (IsHorizontal ? Length : 1));
-        y = Mathf.Clamp(y, 0, GridManager.Height - (!IsHorizontal ? Length : 1));
+        x = Mathf.Clamp(x, 0, GridManager.Instance.Width - (IsHorizontal ? Length : 1));
+        y = Mathf.Clamp(y, 0, GridManager.Instance.Height - (!IsHorizontal ? Length : 1));
 
         return new Vector2Int(x, y);
     }

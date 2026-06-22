@@ -4,8 +4,8 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    public const int Width = 5;
-    public const int Height = 5;
+    public int Width { get; private set; } = 6;
+    public int Height { get; private set; } = 6;
 
     // 2D matrisimiz blok referanslarını tutar.
     private BlockController[,] grid;
@@ -18,15 +18,21 @@ public class GridManager : MonoBehaviour
     {
         if (Instance == null) {
             Instance = this;
-            grid = new BlockController[Width, Height];
         } else {
             Destroy(gameObject);
         }
     }
 
-    public void ResetGrid()
+    public void InitializeGrid(int width, int height)
     {
+        Width = width;
+        Height = height;
         grid = new BlockController[Width, Height];
+        
+        // Izgarayı ekranın tam ortasına (0,0) hizalayacak başlangıç noktasını hesapla
+        float totalWidth = Width * cellSize;
+        float totalHeight = Height * cellSize;
+        gridOrigin = new Vector2(-totalWidth / 2f, -totalHeight / 2f);
     }
 
     public bool IsCellEmptyOrSameBlock(int x, int y, BlockController block)

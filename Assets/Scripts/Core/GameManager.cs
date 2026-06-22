@@ -5,10 +5,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public enum GameState { MainMenu, Playing, LevelComplete, Paused }
+    public enum GameState { MainMenu, Playing, LevelComplete, Paused, Failed }
     public GameState CurrentState { get; private set; }
 
     public static event Action<GameState> OnStateChanged;
+    public static event Action<int> OnMovesUpdated;
+    public static event Action<int> OnScoreUpdated;
+
+    public int MaxMoves { get; private set; }
+    public int CurrentMoves { get; private set; }
+    public int CurrentScore { get; private set; }
 
     private void Awake()
     {
@@ -35,18 +41,38 @@ public class GameManager : MonoBehaviour
         OnStateChanged?.Invoke(newState);
     }
 
+    public void StartLevel(int maxMoves)
+    {
+        MaxMoves = maxMoves;
+        CurrentMoves = maxMoves;
+        CurrentScore = 0; // Veya levela göre hesaplanabilir
+        OnMovesUpdated?.Invoke(CurrentMoves);
+        OnScoreUpdated?.Invoke(CurrentScore);
+        ChangeState(GameState.Playing);
+    }
+
     public void CheckLevelComplete(BlockController targetBlock)
     {
         if (CurrentState != GameState.Playing) return;
 
-        // Klasik Unblock Me'de sağdaki son hücreye gelmek veya grid dışına çıkmak leveli bitirir.
-        // Bizim 6x6 gridimizde sağ çıkış x = 5 veya x = 4'ten başlar.
-        // Eğer target bloğun başlangıç X noktası 4 ise (2 uzunluklu olduğu için 4,5'i kaplar) 
-        // Dışarıya sürükleme animasyonunu başlatabilir veya direkt bitirebiliriz.
-        if (targetBlock.GridPosition.x >= GridManager.Width - targetBlock.Length)
+        if (targetBlock.GridPosition.x >= GridManager.Instance.Width - targetBlock.Length)
         {
             Debug.Log("Level Complete!");
             ChangeState(GameState.LevelComplete);
+        }
+    }
+
+    public void OnBlockMoved()
+    {
+        if (CurrentState != GameState.Playing) return;
+
+        CurrentMoves--;
+        OnMovesUpdated?.Invoke(CurrentMoves);
+
+        if (CurrentMoves <= 0)
+        {
+            Debug.Log("Level Failed - No moves left!");
+            ChangeState(GameState.Failed);
         }
     }
 }

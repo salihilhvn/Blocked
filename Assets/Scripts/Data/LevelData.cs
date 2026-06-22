@@ -6,6 +6,7 @@ public class LevelData
 {
     public int levelId;
     public int gridSize = 6;
+    public int maxMoves = 15; // Yeni eklendi
     public List<BlockData> blocks;
 }
 
