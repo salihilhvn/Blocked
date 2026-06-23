@@ -70,14 +70,14 @@ public class GameManager : MonoBehaviour
             if (nextLevel > unlockedLevel)
             {
                 PlayerPrefs.SetInt("UnlockedLevel", nextLevel);
+                
+                // İlk defa geçiliyorsa kazandığı coinleri bankaya ekle
+                int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
+                totalCoins += CurrentScore;
+                PlayerPrefs.SetInt("TotalBoxCoins", totalCoins);
+                
                 PlayerPrefs.Save();
             }
-
-            // Bu levelde kazandığı coinleri bankaya (TotalBoxCoins) ekle
-            int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
-            totalCoins += CurrentScore;
-            PlayerPrefs.SetInt("TotalBoxCoins", totalCoins);
-            PlayerPrefs.Save();
 
             if (confettiPrefab != null)
             {

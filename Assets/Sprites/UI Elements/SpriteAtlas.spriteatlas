@@ -79,6 +79,8 @@ SpriteAtlas:
     - {fileID: 21300000, guid: eafdb0585f7dd154f9827be18b7e7301, type: 3}
     - {fileID: 21300000, guid: 89b0d7f664a7560449dacd2654ef1d5f, type: 3}
     - {fileID: 21300000, guid: 8e926eb8788d64649ac25ff1631f985d, type: 3}
+    - {fileID: 21300000, guid: ba045bc7c09317744a1cd9743f46a7c2, type: 3}
+    - {fileID: 21300000, guid: ce59504e394f2254ebc68d839ad70715, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -98,6 +100,7 @@ SpriteAtlas:
     - 7206f297d67ce39439f19624def9c10a: 21300000
     - 61c77397da04ed744adbedbac557ecba: 21300000
     - 9b7706c7b8e4faf42b1934fd7dbe6792: 21300000
+    - ba045bc7c09317744a1cd9743f46a7c2: 21300000
     - ae72d2d7329a1874c997f80a46a1de56: 21300000
     - eafdb0585f7dd154f9827be18b7e7301: 21300000
     - 8e926eb8788d64649ac25ff1631f985d: 21300000
@@ -113,6 +116,7 @@ SpriteAtlas:
     - b8a5547c88072434c9b2a8a0ff6000da: 21300000
     - 9009d30d81ee5e04293aedca06e3a69a: 21300000
     - 2b71f61ecc45d384d9b0a0114d9cf5b9: 21300000
+    - ce59504e394f2254ebc68d839ad70715: 21300000
     - f923fb6e46f3259459e7a2a111274d5f: 21300000
     - 22320a1fc736d2a48ade5102bd4fda78: 21300000
     - 071a728fd8b52fe469675c6fe50cd667: 21300000
@@ -134,6 +138,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7206f297d67ce39439f19624def9c10a, type: 3}
   - {fileID: 21300000, guid: 61c77397da04ed744adbedbac557ecba, type: 3}
   - {fileID: 21300000, guid: 9b7706c7b8e4faf42b1934fd7dbe6792, type: 3}
+  - {fileID: 21300000, guid: ba045bc7c09317744a1cd9743f46a7c2, type: 3}
   - {fileID: 21300000, guid: ae72d2d7329a1874c997f80a46a1de56, type: 3}
   - {fileID: 21300000, guid: eafdb0585f7dd154f9827be18b7e7301, type: 3}
   - {fileID: 21300000, guid: 8e926eb8788d64649ac25ff1631f985d, type: 3}
@@ -149,6 +154,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b8a5547c88072434c9b2a8a0ff6000da, type: 3}
   - {fileID: 21300000, guid: 9009d30d81ee5e04293aedca06e3a69a, type: 3}
   - {fileID: 21300000, guid: 2b71f61ecc45d384d9b0a0114d9cf5b9, type: 3}
+  - {fileID: 21300000, guid: ce59504e394f2254ebc68d839ad70715, type: 3}
   - {fileID: 21300000, guid: f923fb6e46f3259459e7a2a111274d5f, type: 3}
   - {fileID: 21300000, guid: 22320a1fc736d2a48ade5102bd4fda78, type: 3}
   - {fileID: 21300000, guid: 071a728fd8b52fe469675c6fe50cd667, type: 3}
@@ -169,6 +175,7 @@ SpriteAtlas:
   - Purchase_1000_PopUp
   - 3x1_up_down
   - Confirm_Button
+  - Pop_Up_50000
   - Group 7
   - Store_Selected
   - box
@@ -184,6 +191,7 @@ SpriteAtlas:
   - next_level
   - 1x2_right_left
   - PLAY BUTTON
+  - PopUp_15000
   - failed_background
   - Levels_Container
   - Home
