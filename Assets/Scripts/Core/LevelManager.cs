@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     public Transform boardContainer;
 
     [Header("Testing")]
+    public bool autoStartTestLevel = false;
     public TextAsset testLevelJson;
 
     private List<BlockController> currentBlocks = new List<BlockController>();
@@ -32,14 +33,17 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        // Önce test level var mı bak, yoksa Resources'dan Level 1'i yükle
-        if (testLevelJson != null)
+        if (autoStartTestLevel)
         {
-            LoadLevelFromJson(testLevelJson.text);
-        }
-        else
-        {
-            LoadLevel(currentLevelIndex);
+            // Önce test level var mı bak, yoksa Resources'dan Level 1'i yükle
+            if (testLevelJson != null)
+            {
+                LoadLevelFromJson(testLevelJson.text);
+            }
+            else
+            {
+                LoadLevel(currentLevelIndex);
+            }
         }
     }
 

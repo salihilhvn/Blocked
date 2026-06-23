@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 2
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -78,6 +78,7 @@ SpriteAtlas:
     - {fileID: 21300000, guid: ec8bef47bde24a94b9ecb6e1dc0838ed, type: 3}
     - {fileID: 21300000, guid: eafdb0585f7dd154f9827be18b7e7301, type: 3}
     - {fileID: 21300000, guid: 89b0d7f664a7560449dacd2654ef1d5f, type: 3}
+    - {fileID: 21300000, guid: 8e926eb8788d64649ac25ff1631f985d, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -99,6 +100,7 @@ SpriteAtlas:
     - 9b7706c7b8e4faf42b1934fd7dbe6792: 21300000
     - ae72d2d7329a1874c997f80a46a1de56: 21300000
     - eafdb0585f7dd154f9827be18b7e7301: 21300000
+    - 8e926eb8788d64649ac25ff1631f985d: 21300000
     - 07c7b2d8ef4abbf44a7be62a38e397c1: 21300000
     - 9a3343f86e06fcb4d87cb561da35fac2: 21300000
     - 06b2b8f9cd823314c87d4270a5215730: 21300000
@@ -134,6 +136,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9b7706c7b8e4faf42b1934fd7dbe6792, type: 3}
   - {fileID: 21300000, guid: ae72d2d7329a1874c997f80a46a1de56, type: 3}
   - {fileID: 21300000, guid: eafdb0585f7dd154f9827be18b7e7301, type: 3}
+  - {fileID: 21300000, guid: 8e926eb8788d64649ac25ff1631f985d, type: 3}
   - {fileID: 21300000, guid: 07c7b2d8ef4abbf44a7be62a38e397c1, type: 3}
   - {fileID: 21300000, guid: 9a3343f86e06fcb4d87cb561da35fac2, type: 3}
   - {fileID: 21300000, guid: 06b2b8f9cd823314c87d4270a5215730, type: 3}
@@ -168,6 +171,7 @@ SpriteAtlas:
   - Confirm_Button
   - Group 7
   - Store_Selected
+  - box
   - 1x1_free_all
   - main_menu
   - 50000
@@ -185,5 +189,5 @@ SpriteAtlas:
   - Home
   - 15000
   m_RenderDataMap: {}
-  m_Tag: New Sprite Atlas
+  m_Tag: SpriteAtlas
   m_IsVariant: 0

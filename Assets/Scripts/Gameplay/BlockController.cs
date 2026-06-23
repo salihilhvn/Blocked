@@ -120,22 +120,24 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         isDragging = false;
 
         // Snap to grid
+        Vector2Int startGridPos = GridPosition;
         Vector2Int newGridPos = CalculateGridPositionFromWorld();
-        
-        bool hasMoved = (newGridPos != GridPosition);
         
         GridPosition = newGridPos;
         UpdateWorldPosition();
-        RegisterToGrid();
+        bool hasMoved = (GridPosition != startGridPos);
 
-        if (hasMoved)
-        {
-            GameManager.Instance.OnBlockMoved();
-        }
+        RegisterToGrid();
 
         if (IsTarget)
         {
             GameManager.Instance.CheckLevelComplete(this);
+        }
+        
+        if (hasMoved)
+        {
+            int distanceMoved = Mathf.Abs(GridPosition.x - startGridPos.x) + Mathf.Abs(GridPosition.y - startGridPos.y);
+            GameManager.Instance.OnBlockMoved(distanceMoved, transform.position);
         }
     }
 

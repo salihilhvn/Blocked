@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     public int CurrentMoves { get; private set; }
     public int CurrentScore { get; private set; }
 
+    [Header("Juice Effects")]
+    public GameObject floatingTextPrefab;
+    public GameObject confettiPrefab;
+
     private void Awake()
     {
         if (Instance == null) {
@@ -45,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         MaxMoves = maxMoves;
         CurrentMoves = maxMoves;
-        CurrentScore = 0; // Veya levela göre hesaplanabilir
+        CurrentScore = 0; // Bu levelde kazanılan coinler
         OnMovesUpdated?.Invoke(CurrentMoves);
         OnScoreUpdated?.Invoke(CurrentScore);
         ChangeState(GameState.Playing);
@@ -59,17 +63,56 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Level Complete!");
             ChangeState(GameState.LevelComplete);
+            
+            // Sıradaki bölümü aç ve kaydet
+            int nextLevel = LevelManager.Instance.currentLevelIndex + 1;
+            int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+            if (nextLevel > unlockedLevel)
+            {
+                PlayerPrefs.SetInt("UnlockedLevel", nextLevel);
+                PlayerPrefs.Save();
+            }
+
+            // Bu levelde kazandığı coinleri bankaya (TotalBoxCoins) ekle
+            int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
+            totalCoins += CurrentScore;
+            PlayerPrefs.SetInt("TotalBoxCoins", totalCoins);
+            PlayerPrefs.Save();
+
+            if (confettiPrefab != null)
+            {
+                // Ekranın üstünden patlayıp aşağı dökülmesi için Y'yi biraz yüksek veriyoruz.
+                Vector3 spawnPos = new Vector3(0, 3f, -2f);
+                Instantiate(confettiPrefab, spawnPos, Quaternion.identity);
+            }
         }
     }
 
-    public void OnBlockMoved()
+    public void OnBlockMoved(int distance, Vector3 position)
     {
-        if (CurrentState != GameState.Playing) return;
+        if (CurrentState != GameState.Playing && CurrentState != GameState.LevelComplete) return;
 
         CurrentMoves--;
+        CurrentScore += distance;
+        
+        // Sadece skoru günceller, level bitmeden kaydetmez
         OnMovesUpdated?.Invoke(CurrentMoves);
+        OnScoreUpdated?.Invoke(CurrentScore);
 
-        if (CurrentMoves <= 0)
+        if (floatingTextPrefab != null && distance > 0)
+        {
+            // Yazıyı bloğun biraz üstünde doğur
+            Vector3 spawnPos = position + new Vector3(0, 0.5f, -1f); 
+            GameObject floatingTextObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
+            
+            FloatingText floatingTextScript = floatingTextObj.GetComponent<FloatingText>();
+            if (floatingTextScript != null)
+            {
+                floatingTextScript.Setup(distance);
+            }
+        }
+
+        if (CurrentMoves <= 0 && CurrentState != GameState.LevelComplete)
         {
             Debug.Log("Level Failed - No moves left!");
             ChangeState(GameState.Failed);

@@ -23,7 +23,7 @@ public class GameSetupTool : EditorWindow
         }
 
         // 3. GridManager ayarları
-        GridManager gridManager = Object.FindObjectOfType<GridManager>();
+        GridManager gridManager = Object.FindFirstObjectByType<GridManager>();
         if (gridManager != null)
         {
             gridManager.cellSize = 1.5f;
@@ -38,7 +38,7 @@ public class GameSetupTool : EditorWindow
         GameObject targetBlock = CreateBlockPrefab("Target_Auto", new Vector2(3f, 1.5f), Color.red);
 
         // 5. LevelManager'a Ata
-        LevelManager levelManager = Object.FindObjectOfType<LevelManager>();
+        LevelManager levelManager = Object.FindFirstObjectByType<LevelManager>();
         if (levelManager != null)
         {
             levelManager.freeBlockPrefab = freeBlock.GetComponent<BlockController>();
