@@ -5,8 +5,9 @@ public class MainMenuManager : MonoBehaviour
 {
     [Header("Menu Panels")]
     public GameObject mainMenuPanel;
-    public GameObject storePanel;  // Şimdilik boş kalabilir
-    public GameObject levelsPanel; // Şimdilik boş kalabilir
+    public GameObject storePanel;  
+    public GameObject levelsPanel; 
+    public GameObject settingsPanel;
 
     [Header("Bottom Bar Tabs")]
     public Image storeTabImage;
@@ -67,6 +68,14 @@ public class MainMenuManager : MonoBehaviour
     {
         // Play'e basınca son kalınan bölümü yükle
         LevelManager.Instance.LoadLevel(LevelManager.Instance.currentLevelIndex);
+    }
+
+    public void OnSettingsButtonClicked()
+    {
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(true);
+        }
     }
 
     public void OnStoreTabClicked()

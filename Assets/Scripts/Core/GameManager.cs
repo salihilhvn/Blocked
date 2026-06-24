@@ -66,24 +66,20 @@ public class GameManager : MonoBehaviour
             
             // Sıradaki bölümü aç ve kaydet
             int nextLevel = LevelManager.Instance.currentLevelIndex + 1;
-            int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-            if (nextLevel > unlockedLevel)
+            if (DataManager.Instance != null)
             {
-                PlayerPrefs.SetInt("UnlockedLevel", nextLevel);
-                
-                // İlk defa geçiliyorsa kazandığı coinleri bankaya ekle
-                int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
-                totalCoins += CurrentScore;
-                PlayerPrefs.SetInt("TotalBoxCoins", totalCoins);
-                
-                PlayerPrefs.Save();
+                if (nextLevel > DataManager.Instance.GetUnlockedLevel())
+                {
+                    DataManager.Instance.SaveUnlockedLevel(nextLevel);
+                    // İlk defa geçiliyorsa kazandığı coinleri bankaya ekle
+                    DataManager.Instance.AddCoins(CurrentScore);
+                }
             }
 
-            if (confettiPrefab != null)
+            if (ObjectPooler.Instance != null && ObjectPooler.Instance.confettiPrefab != null)
             {
-                // Ekranın üstünden patlayıp aşağı dökülmesi için Y'yi biraz yüksek veriyoruz.
                 Vector3 spawnPos = new Vector3(0, 3f, -2f);
-                Instantiate(confettiPrefab, spawnPos, Quaternion.identity);
+                ObjectPooler.Instance.SpawnConfetti(spawnPos);
             }
         }
     }
@@ -99,16 +95,18 @@ public class GameManager : MonoBehaviour
         OnMovesUpdated?.Invoke(CurrentMoves);
         OnScoreUpdated?.Invoke(CurrentScore);
 
-        if (floatingTextPrefab != null && distance > 0)
+        if (ObjectPooler.Instance != null && ObjectPooler.Instance.floatingTextPrefab != null && distance > 0)
         {
-            // Yazıyı bloğun biraz üstünde doğur
             Vector3 spawnPos = position + new Vector3(0, 0.5f, -1f); 
-            GameObject floatingTextObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
+            GameObject floatingTextObj = ObjectPooler.Instance.SpawnFloatingText(spawnPos);
             
-            FloatingText floatingTextScript = floatingTextObj.GetComponent<FloatingText>();
-            if (floatingTextScript != null)
+            if (floatingTextObj != null)
             {
-                floatingTextScript.Setup(distance);
+                FloatingText floatingTextScript = floatingTextObj.GetComponent<FloatingText>();
+                if (floatingTextScript != null)
+                {
+                    floatingTextScript.Setup(distance);
+                }
             }
         }
 

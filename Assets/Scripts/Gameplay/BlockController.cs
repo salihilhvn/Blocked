@@ -18,10 +18,15 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
     private enum DragAxis { None, Horizontal, Vertical }
     private DragAxis currentDragAxis = DragAxis.None;
     private Vector3 dragStartMousePos;
+    
+    private Coroutine slideCoroutine;
+    private Coroutine scaleCoroutine;
+    private Vector3 originalScale;
 
     private void Awake()
     {
         mainCamera = Camera.main;
+        originalScale = transform.localScale;
     }
 
     public void Initialize(int id, int length, bool isHorizontal, bool isTarget, bool isFree, Vector2Int startPos)
@@ -63,6 +68,9 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         currentDragAxis = DragAxis.None;
         isDragging = true;
         UnregisterFromGrid();
+
+        if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+        scaleCoroutine = StartCoroutine(ScaleTo(originalScale * 1.05f, 0.1f));
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -119,12 +127,20 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (!isDragging) return;
         isDragging = false;
 
+        if (scaleCoroutine != null) StopCoroutine(scaleCoroutine);
+        scaleCoroutine = StartCoroutine(ScaleTo(originalScale, 0.1f));
+
         // Snap to grid
         Vector2Int startGridPos = GridPosition;
         Vector2Int newGridPos = CalculateGridPositionFromWorld();
         
         GridPosition = newGridPos;
-        UpdateWorldPosition();
+        
+        // Smooth snap yerine geçiş
+        Vector3 targetSnapPos = GridManager.Instance.GridToWorld(GridPosition.x, GridPosition.y, Length, IsHorizontal);
+        if (slideCoroutine != null) StopCoroutine(slideCoroutine);
+        slideCoroutine = StartCoroutine(SlideTo(targetSnapPos, 0.1f));
+
         bool hasMoved = (GridPosition != startGridPos);
 
         RegisterToGrid();
@@ -137,8 +153,34 @@ public class BlockController : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (hasMoved)
         {
             int distanceMoved = Mathf.Abs(GridPosition.x - startGridPos.x) + Mathf.Abs(GridPosition.y - startGridPos.y);
-            GameManager.Instance.OnBlockMoved(distanceMoved, transform.position);
+            GameManager.Instance.OnBlockMoved(distanceMoved, targetSnapPos);
         }
+    }
+
+    private System.Collections.IEnumerator ScaleTo(Vector3 targetScale, float duration)
+    {
+        float time = 0;
+        Vector3 startScale = transform.localScale;
+        while (time < duration)
+        {
+            transform.localScale = Vector3.Lerp(startScale, targetScale, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.localScale = targetScale;
+    }
+
+    private System.Collections.IEnumerator SlideTo(Vector3 targetPos, float duration)
+    {
+        float time = 0;
+        Vector3 startPos = transform.position;
+        while (time < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPos, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPos;
     }
 
     private Vector3 GetMouseWorldPos(Vector2 screenPos)
