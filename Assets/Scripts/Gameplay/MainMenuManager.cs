@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject storePanel;  
     public GameObject levelsPanel; 
     public GameObject settingsPanel;
+    public GameObject helpPanel;
 
     [Header("Bottom Bar Tabs")]
     public Image storeTabImage;
@@ -75,6 +76,22 @@ public class MainMenuManager : MonoBehaviour
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(true);
+        }
+    }
+
+    public void OnHelpButtonClicked()
+    {
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(true);
+        }
+    }
+
+    public void CloseHelpPanel()
+    {
+        if (helpPanel != null)
+        {
+            helpPanel.SetActive(false);
         }
     }
 

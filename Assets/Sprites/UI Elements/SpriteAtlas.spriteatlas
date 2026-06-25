@@ -81,6 +81,10 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 8e926eb8788d64649ac25ff1631f985d, type: 3}
     - {fileID: 21300000, guid: ba045bc7c09317744a1cd9743f46a7c2, type: 3}
     - {fileID: 21300000, guid: ce59504e394f2254ebc68d839ad70715, type: 3}
+    - {fileID: 21300000, guid: dd3f9456fd4922d44aa751f14f189662, type: 3}
+    - {fileID: 21300000, guid: 4072058cae0cbcf40a79011cc513337a, type: 3}
+    - {fileID: 21300000, guid: ac96ac8667480594f9c793201dc4bb46, type: 3}
+    - {fileID: 21300000, guid: fcbbb79dbee1ac54283d2020db94e049, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -92,6 +96,8 @@ SpriteAtlas:
     - ae61dc75bf529e44d84ecebe86c3f439: 21300000
     - 6ac217f57ea0bea4eb201dc0dd547b06: 21300000
     - 3f29022696f86c442a3e6f4a12d50d29: 21300000
+    - dd3f9456fd4922d44aa751f14f189662: 21300000
+    - ac96ac8667480594f9c793201dc4bb46: 21300000
     - ecfae5a6266ed764fb0d84764e785089: 21300000
     - a8873fb644e606347acd761a15a85212: 21300000
     - d529c3e6fee2ebf4eb61f337cfd9e801: 21300000
@@ -114,7 +120,9 @@ SpriteAtlas:
     - eaa296bb0a9ec3640bbf1b28c2ee9a53: 21300000
     - 525ddedbe9197f841bd67b1b616cfa6a: 21300000
     - b8a5547c88072434c9b2a8a0ff6000da: 21300000
+    - 4072058cae0cbcf40a79011cc513337a: 21300000
     - 9009d30d81ee5e04293aedca06e3a69a: 21300000
+    - fcbbb79dbee1ac54283d2020db94e049: 21300000
     - 2b71f61ecc45d384d9b0a0114d9cf5b9: 21300000
     - ce59504e394f2254ebc68d839ad70715: 21300000
     - f923fb6e46f3259459e7a2a111274d5f: 21300000
@@ -130,6 +138,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ae61dc75bf529e44d84ecebe86c3f439, type: 3}
   - {fileID: 21300000, guid: 6ac217f57ea0bea4eb201dc0dd547b06, type: 3}
   - {fileID: 21300000, guid: 3f29022696f86c442a3e6f4a12d50d29, type: 3}
+  - {fileID: 21300000, guid: dd3f9456fd4922d44aa751f14f189662, type: 3}
+  - {fileID: 21300000, guid: ac96ac8667480594f9c793201dc4bb46, type: 3}
   - {fileID: 21300000, guid: ecfae5a6266ed764fb0d84764e785089, type: 3}
   - {fileID: 21300000, guid: a8873fb644e606347acd761a15a85212, type: 3}
   - {fileID: 21300000, guid: d529c3e6fee2ebf4eb61f337cfd9e801, type: 3}
@@ -152,7 +162,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: eaa296bb0a9ec3640bbf1b28c2ee9a53, type: 3}
   - {fileID: 21300000, guid: 525ddedbe9197f841bd67b1b616cfa6a, type: 3}
   - {fileID: 21300000, guid: b8a5547c88072434c9b2a8a0ff6000da, type: 3}
+  - {fileID: 21300000, guid: 4072058cae0cbcf40a79011cc513337a, type: 3}
   - {fileID: 21300000, guid: 9009d30d81ee5e04293aedca06e3a69a, type: 3}
+  - {fileID: 21300000, guid: fcbbb79dbee1ac54283d2020db94e049, type: 3}
   - {fileID: 21300000, guid: 2b71f61ecc45d384d9b0a0114d9cf5b9, type: 3}
   - {fileID: 21300000, guid: ce59504e394f2254ebc68d839ad70715, type: 3}
   - {fileID: 21300000, guid: f923fb6e46f3259459e7a2a111274d5f, type: 3}
@@ -167,6 +179,8 @@ SpriteAtlas:
   - 2x1_up_down
   - LEVELS
   - 1000
+  - Group 32
+  - Group 34
   - Levels
   - Cancel_button
   - LEVEL
@@ -189,7 +203,9 @@ SpriteAtlas:
   - Help
   - Home_Selected
   - next_level
+  - Group 33
   - 1x2_right_left
+  - HELP
   - PLAY BUTTON
   - PopUp_15000
   - failed_background
