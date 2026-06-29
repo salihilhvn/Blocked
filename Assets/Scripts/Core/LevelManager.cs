@@ -122,7 +122,37 @@ public class LevelManager : MonoBehaviour
         }
 
         OnLevelLoaded?.Invoke(currentLevelIndex);
-        GameManager.Instance.StartLevel(data.maxMoves); // Oyun başlar, sayaçlar sıfırlanır
+        GameManager.Instance.StartLevel(data.maxMoves, data.timeLimit);
+    }
+
+    public bool RemoveRandomBlock()
+    {
+        // Hedef blok (Kırmızı) olmayanları listele
+        List<BlockController> removableBlocks = new List<BlockController>();
+        foreach(var block in currentBlocks)
+        {
+            if (block != null && !block.IsTarget)
+            {
+                removableBlocks.Add(block);
+            }
+        }
+
+        if (removableBlocks.Count > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, removableBlocks.Count);
+            BlockController blockToRemove = removableBlocks[randomIndex];
+            
+            // Grid'den boşalt
+            GridManager.Instance.UnregisterBlock(blockToRemove.GridPosition.x, blockToRemove.GridPosition.y, blockToRemove.Length, blockToRemove.IsHorizontal);
+            
+            currentBlocks.Remove(blockToRemove);
+            Destroy(blockToRemove.gameObject);
+            Debug.Log("Random Block Removed!");
+            return true;
+        }
+        
+        Debug.LogWarning("No removable block found.");
+        return false;
     }
 
     public void ClearLevel()

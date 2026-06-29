@@ -6,7 +6,8 @@ public class LevelData
 {
     public int levelId;
     public int gridSize = 6;
-    public int maxMoves = 15; // Yeni eklendi
+    public int maxMoves = 15; 
+    public float timeLimit = 60f; // Saniye cinsinden (0 veya altı = süresiz)
     public List<BlockData> blocks;
 }
 

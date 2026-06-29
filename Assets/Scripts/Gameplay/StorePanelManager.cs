@@ -6,9 +6,30 @@ public class StorePanelManager : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI totalBoxCoinsText;
 
+    [Header("Power-Up Counts")]
+    public TextMeshProUGUI timePUCountText;
+    public TextMeshProUGUI doublePUCountText;
+    public TextMeshProUGUI removerPUCountText;
+
+    [Header("Power-Up Costs")]
+    public int timePUCost = 500;
+    public int doublePUCost = 1000;
+    public int removerPUCost = 3000;
+
     private void OnEnable()
     {
         UpdateTotalCoinsDisplay();
+        UpdatePowerUpCounts();
+    }
+
+    public void UpdatePowerUpCounts()
+    {
+        if (DataManager.Instance != null)
+        {
+            if (timePUCountText != null) timePUCountText.text = DataManager.Instance.GetPowerUpCount(DataManager.KEY_PU_TIME).ToString();
+            if (doublePUCountText != null) doublePUCountText.text = DataManager.Instance.GetPowerUpCount(DataManager.KEY_PU_DOUBLE).ToString();
+            if (removerPUCountText != null) removerPUCountText.text = DataManager.Instance.GetPowerUpCount(DataManager.KEY_PU_REMOVER).ToString();
+        }
     }
 
     public void UpdateTotalCoinsDisplay()
@@ -16,8 +37,10 @@ public class StorePanelManager : MonoBehaviour
         if (totalBoxCoinsText != null)
         {
             // Hafızadaki toplam coinleri al
-            int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
-            totalBoxCoinsText.text = totalCoins.ToString();
+            if (DataManager.Instance != null)
+            {
+                totalBoxCoinsText.text = DataManager.Instance.GetTotalCoins().ToString();
+            }
         }
     }
 
@@ -48,10 +71,10 @@ public class StorePanelManager : MonoBehaviour
     public void ConfirmPurchase(int coinAmount)
     {
         // 1. Coinleri bankaya ekle
-        int totalCoins = PlayerPrefs.GetInt("TotalBoxCoins", 0);
-        totalCoins += coinAmount;
-        PlayerPrefs.SetInt("TotalBoxCoins", totalCoins);
-        PlayerPrefs.Save();
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.AddCoins(coinAmount);
+        }
 
         // 2. Sol üstteki sayacı hemen güncelle
         UpdateTotalCoinsDisplay();
@@ -60,5 +83,40 @@ public class StorePanelManager : MonoBehaviour
         CloseAllPopups();
         
         Debug.Log("Satın alma başarılı: " + coinAmount + " Box Coin eklendi!");
+    }
+
+    // --- POWER-UP SATIN ALMA METOTLARI ---
+
+    public void BuyTimePowerUp()
+    {
+        if (DataManager.Instance != null && DataManager.Instance.GetTotalCoins() >= timePUCost)
+        {
+            DataManager.Instance.SpendCoins(timePUCost);
+            DataManager.Instance.AddPowerUp(DataManager.KEY_PU_TIME, 1);
+            UpdateTotalCoinsDisplay();
+            UpdatePowerUpCounts();
+        }
+    }
+
+    public void BuyDoublePowerUp()
+    {
+        if (DataManager.Instance != null && DataManager.Instance.GetTotalCoins() >= doublePUCost)
+        {
+            DataManager.Instance.SpendCoins(doublePUCost);
+            DataManager.Instance.AddPowerUp(DataManager.KEY_PU_DOUBLE, 1);
+            UpdateTotalCoinsDisplay();
+            UpdatePowerUpCounts();
+        }
+    }
+
+    public void BuyRemoverPowerUp()
+    {
+        if (DataManager.Instance != null && DataManager.Instance.GetTotalCoins() >= removerPUCost)
+        {
+            DataManager.Instance.SpendCoins(removerPUCost);
+            DataManager.Instance.AddPowerUp(DataManager.KEY_PU_REMOVER, 1);
+            UpdateTotalCoinsDisplay();
+            UpdatePowerUpCounts();
+        }
     }
 }

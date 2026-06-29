@@ -10,6 +10,9 @@ public class DataManager : MonoBehaviour
     public const string KEY_MUSIC = "Setting_Music";
     public const string KEY_VIBRATION = "Setting_Vibration";
     public const string KEY_PARENTAL = "Setting_Parental";
+    public const string KEY_PU_TIME = "PU_Time";
+    public const string KEY_PU_REMOVER = "PU_Remover";
+    public const string KEY_PU_DOUBLE = "PU_Double";
 
     private void Awake()
     {
@@ -49,6 +52,39 @@ public class DataManager : MonoBehaviour
         currentCoins += amount;
         PlayerPrefs.SetInt(KEY_TOTAL_COINS, currentCoins);
         PlayerPrefs.Save();
+    }
+
+    public bool SpendCoins(int amount)
+    {
+        int currentCoins = GetTotalCoins();
+        if (currentCoins >= amount)
+        {
+            currentCoins -= amount;
+            PlayerPrefs.SetInt(KEY_TOTAL_COINS, currentCoins);
+            PlayerPrefs.Save();
+            return true;
+        }
+        return false;
+    }
+
+    // --- POWER UPS ---
+    public int GetPowerUpCount(string key) => PlayerPrefs.GetInt(key, 0);
+    public void AddPowerUp(string key, int amount) 
+    {
+        int current = GetPowerUpCount(key);
+        PlayerPrefs.SetInt(key, current + amount);
+        PlayerPrefs.Save();
+    }
+    public bool UsePowerUp(string key)
+    {
+        int current = GetPowerUpCount(key);
+        if (current > 0)
+        {
+            PlayerPrefs.SetInt(key, current - 1);
+            PlayerPrefs.Save();
+            return true;
+        }
+        return false;
     }
 
     // --- SETTINGS ---
