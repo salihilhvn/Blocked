@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     [Header("Texts")]
     public TextMeshProUGUI movesText;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI victoryLevelText; // Kazanma ekranındaki level yazısı
+    public TextMeshProUGUI failedLevelText;  // Kaybetme ekranındaki level yazısı
     public TextMeshProUGUI scoreText; // Sağ üstteki Box Coin sayacı
     public TextMeshProUGUI totalScoreText; // Altındaki Total Block sayacı
     public TextMeshProUGUI timeText; // Zaman sayacı
@@ -118,10 +120,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateLevelText(int levelIndex)
     {
-        if (levelText != null)
-        {
-            levelText.text = "LEVEL " + levelIndex;
-        }
+        string levelStr = "LEVEL " + levelIndex;
+        if (levelText != null) levelText.text = levelStr;
+        if (victoryLevelText != null) victoryLevelText.text = levelStr;
+        if (failedLevelText != null) failedLevelText.text = levelStr;
     }
 
     // Butonlar için metodlar

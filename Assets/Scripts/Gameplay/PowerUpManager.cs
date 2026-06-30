@@ -54,6 +54,12 @@ public class PowerUpManager : MonoBehaviour
             // Sadece oyun oynanırken veya duraklatıldığında power-up ikonlarını göster
             bool shouldBeVisible = (newState == GameManager.GameState.Playing || newState == GameManager.GameState.Paused);
             powerUpContainer.SetActive(shouldBeVisible);
+            
+            // Eğer oyun ekranına (veya duraklatmaya) geçildiyse arayüzü yenile
+            if (shouldBeVisible)
+            {
+                UpdateUI();
+            }
         }
     }
 
@@ -262,7 +268,7 @@ public class PowerUpManager : MonoBehaviour
         }
 
         // Total Text'in güncellenmesi için UIManager'ı yenile
-        UIManager ui = FindObjectOfType<UIManager>();
+        UIManager ui = Object.FindFirstObjectByType<UIManager>();
         if (ui != null)
         {
             ui.RefreshScoreUI();
