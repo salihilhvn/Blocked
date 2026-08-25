@@ -1444,7 +1444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &102647937
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4612,7 +4612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &490822953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13672,6 +13672,8 @@ MonoBehaviour:
   failedPanel: {fileID: 619021842}
   movesText: {fileID: 1085613834}
   levelText: {fileID: 489622725}
+  victoryLevelText: {fileID: 185948628}
+  failedLevelText: {fileID: 34639814}
   scoreText: {fileID: 1753235862}
   totalScoreText: {fileID: 680059714}
   timeText: {fileID: 13166836}
